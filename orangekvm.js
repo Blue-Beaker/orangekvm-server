@@ -1,18 +1,104 @@
 var ws;
 var host = window.location.hostname;
 var hostip = host.replace("http://","").replace("https://","")
+var ws
+var wslinked = false
 function linkws(addr) {
+    if(!"Websocket" in window){
+        alert("Your browser doesn't support websocket. Please use a browser with websocket support.")
+        return
+    }
     ws = new WebSocket(addr);
+    ws.onmessage = function (messageEvent) {
+        var message=messageEvent.data;
+        console.log("<-"+message);
+        if(message.startsWith("keyPressed ")){
+            onKeyPressed(message.slice(start=10));
+        }
+    }
+    ws.onopen = function () {
+        wslinked=true
+        getPressed();
+    }
+    ws.onclose = function () {
+        wslinked=false
+        // reconnect();
+    }
+}
+function wssend(message){
+    if(wslinked)
+    ws.send(message);
+    else
+    reconnect();
 }
 function pressKey(key,press=2) {
-    ws.send("pressKey "+key+" "+press)
+    wssend("pressKey "+key+" "+press);
 }
 function mouseAbsolute(x,y,wheel=0) {
-    ws.send("mouseAbsolute "+x+" "+y+" "+wheel)
+    wssend("mouseAbsolute "+x+" "+y+" "+wheel);
 }
 function mouseRelative(x,y,wheel=0) {
-    ws.send("mouseRelative "+x+" "+y+" "+wheel)
+    wssend("mouseRelative "+x+" "+y+" "+wheel);
 }
 function pressMouse(key,press) {
-    ws.send("pressMouse "+key+" "+press)
+    wssend("pressMouse "+key+" "+press);
+}
+function releaseAll() {
+    wssend("releaseAll");
+}
+function getPressed() {
+    wssend("getPressed");
+}
+function getInfo() {
+    wssend("getInfo");
+}
+
+
+function onKeyPressed(message=""){
+    var pressedKeys=message.split(" ");
+    var keyboard = document.getElementById("keyboard");
+    var buttons=keyboard.getElementsByTagName("button");
+    for (i in buttons) {
+        // var button2 = document.getElementById("keyboard_"+pressedKeys[i]);
+        var button=buttons[i]
+        if(button.id && button.id.startsWith("keyboard_")){
+            var name=button.id.replace("keyboard_","")
+            if(name=="\\\\") name="\\"
+            if(pressedKeys.includes(name)){
+                button.style.backgroundColor="#5599FF";
+                button.style.color="#FFFFFF";
+            }else{
+                button.style.backgroundColor="#F0F0F0";
+                button.style.color="#000000";
+            }
+        }
+    }
+}
+function captureTouch(){
+    var buttons=keyboard.getElementsByTagName("button");
+    for (i in buttons) {
+        var button=buttons[i]
+        if(button.id && button.id.startsWith("keyboard_")){
+            var name=button.id.replace("keyboard_","")
+            if(name=="\\\\") name="\\"
+            button.addEventListener("touchstart",function(){pressKey(name,1)});
+            button.addEventListener("touchend",function(){pressKey(name,0)});
+            button.addEventListener("touchcancel",function(){pressKey(name,0)});
+        }
+    }
+}
+function onResize(){
+var w = document.documentElement.clientWidth;
+var h = document.documentElement.clientHeight;
+if(w<800){
+    document.getElementById("keyboard1").style.setProperty("width","100%")
+}else{
+    document.getElementById("keyboard1").style.setProperty("width","70%")
+}
+
+}
+function onLoadComplete(){
+    onResize()
+    captureTouch()
+    window.addEventListener("resize", onResize);
 }

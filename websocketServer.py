@@ -2,6 +2,11 @@ import asyncio
 import websockets
 import configHandler
 import hidbackend
+import atexit 
+@atexit.register 
+def clean(): 
+    hidbackend.releaseAll()
+    hidbackend.closeSerial()
 
 async def handle(websocket, path):
     #fetch msg
@@ -10,6 +15,9 @@ async def handle(websocket, path):
         message2=hidbackend.handle(message)
         await websocket.send(message2)
         print("-> '{}'".format(message2))
+        message3=hidbackend.getInfo()
+        await websocket.send(message3)
+        print("-> '{}'".format(message3))
 
 async def main():
     # start a websocket server

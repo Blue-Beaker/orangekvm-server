@@ -15,9 +15,12 @@ if __name__ == '__main__':
     wsthread.setDaemon(True)
     print("Starting Websocket server")
     wsthread.start()
+    print("Started Websocket server")
     # websocketServer.run()
     server = httpServer.Server(configHandler.config["server"])
+    httpthread=threading.Thread(target = server.serve_forever)
     print("Starting HTTP server")
-    server.serve_forever()
+    httpthread.start()
+    print("Started HTTP server")
     
     

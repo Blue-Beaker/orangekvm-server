@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+        <title>OrangeKVM 0.1</title>
+    </head>
+    <script type="text/javascript" src="orangekvm.js"></script>
+    <script>
+    function reconnect(){{
+        linkws("ws://"+hostip+":{wsport}/");
+    }}
+    reconnect()
+    </script>
+    <noscript>Your browser doesn't allow javascript. Please use a browser with javascript and websocket enabled.</noscript>
+    <body style="background-color:#FFFFFF;width:100%;height:70%;float:top;">
+        <img src="{streamurl}" alt="{streamurl}" class="shrinkToFit" width=95%>
+    </body>
+    <button id="releaseAll" text="Release All" onclick="releaseAll()">Release All</button>
+    <div id="keyboard" style="background-color:#FF8F00;width:95%;height:300px;float:top">
+        <div id="keyboard1" style="width:100%;float:left">
+            {keyboard1}
+        </div>
+        <div id="keyboard2" style="width:120px;float:left">
+            {keyboard2}
+        </div>
+        <div id="keyboard3" style="width:160px;float:left">
+            {keyboard3}
+        </div>
+    </div>
+    <script>
+        onLoadComplete()
+    </script>
+</html>
