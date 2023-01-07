@@ -20,6 +20,6 @@ class KEYBOARD:
         {'numlock':['Num\nLock',1,1],'numpad/':['/',1,1],'numpad*':['*',1,1],'numpad-':['-',1,1]},
         {'numpad7':['7',1,1],'numpad8':['8',1,1],'numpad9':['9',1,1],'numpad+':['+',1,2]},
         {'numpad4':['4',1,1],'numpad5':['5',1,1],'numpad6':['6',1,1]},
-        {'numpad1':['1',1,1],'numpad2':['2',1,1],'numpad3':['3',1,1],'numpadenter':['Enter',1,1]},
+        {'numpad1':['1',1,1],'numpad2':['2',1,1],'numpad3':['3',1,1],'numpadenter':['Enter',1,2]},
         {'numpad0':['0',2,1],'numpad.':['.',1,1]},
     ]
