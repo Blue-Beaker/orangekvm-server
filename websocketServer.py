@@ -25,7 +25,7 @@ async def handle(websocket: websockets.server.WebSocketServerProtocol, path):
 
 async def main():
     # start a websocket server
-    async with websockets.serve(handle, configHandler.config["websocket"]["address"], configHandler.config["websocket"]["port"]):
+    async with websockets.serve(handle, configHandler.config["server"]["address"], configHandler.config["server"]["wsport"]):
         await asyncio.Future()  # run forever
 def run():
     asyncio.run(main())

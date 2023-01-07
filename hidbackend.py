@@ -28,9 +28,9 @@ def handle(message=""):
         return "Error Can't handle this"
 def init():
     global __ch9329
-    config=configHandler.readConfig()
+    config=configHandler.config
     if config["hid"]["hid_type"].startswith("ch9329_"):
-        __ch9329=ch9329lib.CH9329HID(config["hid"]["hid_type"]==("ch9329_tcp"),config["hid"]["hid_path"],int(config["hid"]["ch9329_address"]),config["hid"]["baudrate"],False)
+        __ch9329=ch9329lib.CH9329HID(config["hid"]["hid_type"].startswith("ch9329_tcp"),config["hid"]["hid_path"],int(config["hid"]["ch9329_address"]),config["hid"]["baudrate"],False)
     else:
         raise UnknownHIDTypeException
 def getPressed():

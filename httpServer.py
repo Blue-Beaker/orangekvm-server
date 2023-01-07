@@ -1,5 +1,3 @@
-
-import datetime
 import http
 import http.server
 from http import HTTPStatus
@@ -33,23 +31,26 @@ def virtKeyboard(keymap: list[dict[str,list[str,float,float]]],columns):
 class ServerCore2(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         """Serve a GET request."""
-        f,ctype = self.send_head()
-        if f:
-            try:
-                if ctype=="text/html":
-                    __DICT={
-                        "wsport":configHandler.config["websocket"]["port"],
-                        "streamurl":configHandler.config["stream"]["stream_url"],
-                        "keyboard1":virtKeyboard(constants.KEYBOARD.KEYS1,14),
-                        "keyboard2":virtKeyboard(constants.KEYBOARD.KEYS2,3),
-                        "keyboard3":virtKeyboard(constants.KEYBOARD.KEYS3,4)
-                    }
-                    pagestr=f.read().decode()
-                    self.wfile.write(pagestr.format(**__DICT).encode())
-                else:
-                    self.copyfile(f, self.wfile)
-            finally:
-                f.close()
+        try:
+            f,ctype = self.send_head()
+            if f:
+                try:
+                    if ctype=="text/html":
+                        __DICT={
+                            "wsport":configHandler.config["websocket"]["port"],
+                            "streamurl":configHandler.config["stream"]["stream_url"],
+                            "keyboard1":virtKeyboard(constants.KEYBOARD.KEYS1,14),
+                            "keyboard2":virtKeyboard(constants.KEYBOARD.KEYS2,3),
+                            "keyboard3":virtKeyboard(constants.KEYBOARD.KEYS3,4)
+                        }
+                        pagestr=f.read().decode()
+                        self.wfile.write(pagestr.format(**__DICT).encode())
+                    else:
+                        self.copyfile(f, self.wfile)
+                finally:
+                    f.close()
+        except:
+            pass
     def send_head(self):
         path = self.translate_path(self.path)
         f = None
@@ -101,10 +102,7 @@ class ServerCore2(http.server.SimpleHTTPRequestHandler):
 
 
 class Server:
-    path=""
-    def __init__(self,config):
-        self.path = config['path']
-        # self.server = http.server.HTTPServer((config['address'],int(config["port"])),ServerCore)
+    def __init__(self,config:configHandler.configparser.ConfigParser):
         self.server = http.server.HTTPServer((config['address'],int(config["port"])),ServerCore2)
     def serve_forever(self):
         self.server.serve_forever()

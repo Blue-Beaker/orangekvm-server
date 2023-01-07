@@ -1,17 +1,15 @@
 import configparser
 import sys
 import os
+config=configparser.ConfigParser()
 def __init__(file='orangekvm.ini'):
     global config
     config=readConfig(file)
     initConfig()
 def readConfig(file='orangekvm.ini'):
-    global config
-    config = configparser.ConfigParser()
     config.read(file)
     return config
 def initConfig():
-    global config
     config=readConfig()
     if("server" not in config):
         config["server"]={}
@@ -19,14 +17,8 @@ def initConfig():
         config["server"]["address"]="0.0.0.0"
     if("port" not in config["server"]):
         config["server"]["port"]='8000'
-    if("path" not in config["server"]):
-        config["server"]["path"]='web'
-    if("websocket" not in config):
-        config["websocket"]={}
-    if("address" not in config["websocket"]):
-        config["websocket"]["address"]="0.0.0.0"
-    if("port" not in config["websocket"]):
-        config["websocket"]["port"]='8001'
+    if("wsport" not in config["server"]):
+        config["server"]["wsport"]='8001'
     if("stream" not in config):
         config["stream"]={}
     if("stream_url" not in config["stream"]):
@@ -43,6 +35,5 @@ def initConfig():
         config["hid"]["baudrate"]="9600"
     saveConfig()
 def saveConfig():
-    global config
     with open('orangekvm.ini', 'w+') as configfile:
         config.write(configfile)
