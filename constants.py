@@ -9,8 +9,8 @@ class KEYBOARD:
 
     KEYS2=[
         {'printscreen':['Print\nScr',1,1],'scrolllock':['Scr\nLock',1,1],'pausebreak':['Pause\nBreak',1,1]},
-        {'home':['Home',1,1],'pageup':['PgUp',1,1],'insert':['Ins',1,1]},
-        {'end':['End',1,1],'pagedown':['PgDn',1,1],'delete':['Del',1,1]},
+        {'insert':['Ins',1,1],'home':['Home',1,1],'pageup':['PgUp',1,1]},
+        {'delete':['Del',1,1],'end':['End',1,1],'pagedown':['PgDn',1,1]},
         {},
         {'up':['↑',1,1,1]},
         {'left':['←',1,1],'down':['↓',1,1],'right':['→',1,1]},

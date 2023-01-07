@@ -78,15 +78,20 @@ function onKeyPressed(message=""){
 function captureTouch(){
     var keyboard = document.getElementById("keyboard");
     var buttons=keyboard.getElementsByTagName("button");
-    for (i in buttons) {
-        var button=buttons[i]
-        if(button.id && button.id.startsWith("keyboard_")){
-            var name=button.id.replace("keyboard_","")
-            console.log(name);
-            button.addEventListener("touchstart",function(){pressKey(name,1)});
-            button.addEventListener("touchend",function(){pressKey(name,0)});
-            button.addEventListener("touchcancel",function(){pressKey(name,0)});
-        }
+    for(i in buttons){
+        btn=buttons[i];
+        btn.addEventListener("touchstart",onTouch);
+        btn.addEventListener("touchend",onTouch);
+        btn.addEventListener("touchcancel",onTouch);
+    }
+}
+function onTouch(event=new TouchEvent()){
+    event.preventDefault()
+    if(event.target.id.startsWith("keyboard_")){
+        var key=event.target.id.replace("keyboard_","")
+        console.log(key)
+        if(event.type=="touchstart") pressKey(key,1)
+        else if(event.type=="touchend" || event.type=="touchcancel") pressKey(key,0)
     }
 }
 function onResize(){

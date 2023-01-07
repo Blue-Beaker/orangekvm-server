@@ -8,7 +8,7 @@ def clean():
     hidbackend.releaseAll()
     hidbackend.closeSerial()
 
-async def handle(websocket: websockets.server.WebSocketServerProtocol, path):
+async def handle(websocket, path):
     #fetch msg
     printMsg=0
     async for message in websocket:
