@@ -1,6 +1,7 @@
 from ch9329lib import ch9329lib
 import configHandler
-__ch9329 = None
+__ch9329: ch9329lib.CH9329HID
+__ch9329=None
 
 def handle(message=""):
     global __ch9329
@@ -16,7 +17,7 @@ def handle(message=""):
     elif execute[0]=="mouseAbsolute":
         return mouseAbsolute(int(execute[1]),int(execute[2]),int(execute[3]))
     elif execute[0]=="getInfo":
-        return getInfo()
+        pass
     if execute[0]=="getPressed":
         return getPressed()
     elif execute[0]=="releaseAll":

@@ -4,6 +4,7 @@
         <meta charset="utf-8"> 
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
         <title>OrangeKVM 0.1</title>
+        <link rel="stylesheet" type="text/css" href="styles.css">
     </head>
     <script type="text/javascript" src="orangekvm.js"></script>
     <script>
@@ -16,16 +17,25 @@
     <body style="background-color:#FFFFFF;width:100%;height:70%;float:top;">
         <img src="{streamurl}" alt="{streamurl}" class="shrinkToFit" width=95%>
     </body>
-    <button id="releaseAll" text="Release All" onclick="releaseAll()">Release All</button>
-    <div id="keyboard" style="background-color:#FF8F00;width:95%;height:300px;float:top">
-        <div id="keyboard1" style="width:100%;float:left">
+    <div id="infoAndConfig" style="background-color:#ffffff;width:95%;float:left">
+        <body id="wsstatus" style="color:red">⬤</body>
+        <button id="releaseAll" onclick="releaseAll()">Release All</button>
+    </div>
+    <div id="keyboard" style="width:95%;float:left;position: relative;">
+        <div class="kbarea" id="keyboard1" style="background-color:#FF8F00;width:100%;height:240px;float:left;position: relative;">
+            <div style="position: relative">
             {keyboard1}
+            </div>
         </div>
-        <div id="keyboard2" style="width:120px;float:left">
+        <div class="kbarea" id="keyboard2" style="background-color:#FF8F00;width:120px;height:240px;float:left;position: relative;">
+            <div style="position: relative">
             {keyboard2}
+            </div>
         </div>
-        <div id="keyboard3" style="width:160px;float:left">
+        <div class="kbarea" id="keyboard3" style="background-color:#FF8F00;width:160px;height:240px;float:left;position: relative;">
+            <div style="position: relative">
             {keyboard3}
+            </div>
         </div>
     </div>
     <script>

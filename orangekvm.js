@@ -3,6 +3,7 @@ var host = window.location.hostname;
 var hostip = host.replace("http://","").replace("https://","")
 var ws
 var wslinked = false
+var worker
 function linkws(addr) {
     if(!"Websocket" in window){
         alert("Your browser doesn't support websocket. Please use a browser with websocket support.")
@@ -18,11 +19,12 @@ function linkws(addr) {
     }
     ws.onopen = function () {
         wslinked=true
-        getPressed();
+        document.getElementById("wsstatus").style.setProperty("color","lime")
+        setTimeout("getPressed()",2000);
     }
     ws.onclose = function () {
         wslinked=false
-        // reconnect();
+        document.getElementById("wsstatus").style.setProperty("color","red")
     }
 }
 function wssend(message){
@@ -63,7 +65,6 @@ function onKeyPressed(message=""){
         var button=buttons[i]
         if(button.id && button.id.startsWith("keyboard_")){
             var name=button.id.replace("keyboard_","")
-            if(name=="\\\\") name="\\"
             if(pressedKeys.includes(name)){
                 button.style.backgroundColor="#5599FF";
                 button.style.color="#FFFFFF";
@@ -75,12 +76,13 @@ function onKeyPressed(message=""){
     }
 }
 function captureTouch(){
+    var keyboard = document.getElementById("keyboard");
     var buttons=keyboard.getElementsByTagName("button");
     for (i in buttons) {
         var button=buttons[i]
         if(button.id && button.id.startsWith("keyboard_")){
             var name=button.id.replace("keyboard_","")
-            if(name=="\\\\") name="\\"
+            console.log(name);
             button.addEventListener("touchstart",function(){pressKey(name,1)});
             button.addEventListener("touchend",function(){pressKey(name,0)});
             button.addEventListener("touchcancel",function(){pressKey(name,0)});
@@ -90,15 +92,27 @@ function captureTouch(){
 function onResize(){
 var w = document.documentElement.clientWidth;
 var h = document.documentElement.clientHeight;
-if(w<800){
+if(w<=560){
     document.getElementById("keyboard1").style.setProperty("width","100%")
 }else{
-    document.getElementById("keyboard1").style.setProperty("width","70%")
+    document.getElementById("keyboard1").style.setProperty("width","560px")
 }
 
 }
+
+function timedUpdate()
+{
+    if(wslinked){
+        getPressed();
+    }else{
+        reconnect();
+    }
+    setTimeout("timedUpdate()",2000);
+}
+
 function onLoadComplete(){
-    onResize()
-    captureTouch()
+    onResize();
+    captureTouch();
     window.addEventListener("resize", onResize);
+    // timedUpdate();
 }
