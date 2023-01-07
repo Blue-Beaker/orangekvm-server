@@ -37,7 +37,7 @@ class ServerCore2(http.server.SimpleHTTPRequestHandler):
                 try:
                     if ctype=="text/html":
                         __DICT={
-                            "wsport":configHandler.config["websocket"]["port"],
+                            "wsport":configHandler.config["server"]["wsport"],
                             "streamurl":configHandler.config["stream"]["stream_url"],
                             "keyboard1":virtKeyboard(constants.KEYBOARD.KEYS1,14),
                             "keyboard2":virtKeyboard(constants.KEYBOARD.KEYS2,3),
