@@ -29,6 +29,8 @@ def virtKeyboard(keymap: list[dict[str,list[str,float,float]]],columns):
     return keystr
 
 class ServerCore2(http.server.SimpleHTTPRequestHandler):
+    def __init__(self, *args, directory=None, **kwargs):
+        super().__init__(*args, **kwargs, directory = 'web')
     def do_GET(self):
         """Serve a GET request."""
         try:
