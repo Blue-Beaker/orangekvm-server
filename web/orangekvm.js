@@ -12,7 +12,7 @@ function linkws(addr) {
     ws = new WebSocket(addr);
     ws.onmessage = function (messageEvent) {
         var message=messageEvent.data;
-        console.log("<-"+message);
+        console.log("<- "+message);
         if(message.startsWith("keyPressed ")){
             onKeyPressed(message.slice(start=10));
         }
@@ -28,8 +28,9 @@ function linkws(addr) {
     }
 }
 function wssend(message){
-    if(wslinked)
+    if(wslinked){
     ws.send(message);
+    console.log("-> "+message);}
     else
     reconnect();
 }
@@ -66,58 +67,101 @@ function onKeyPressed(message=""){
         if(button.id && button.id.startsWith("keyboard_")){
             var name=button.id.replace("keyboard_","")
             if(pressedKeys.includes(name)){
-                button.style.backgroundColor="#5599FF";
-                button.style.color="#FFFFFF";
+                // button.style.backgroundColor="#5599FF";
+                // button.style.color="#FFFFFF";
+                button.classList.add("activekey")
             }else{
-                button.style.backgroundColor="#F0F0F0";
-                button.style.color="#000000";
+                // button.style.backgroundColor="#F0F0F0";
+                // button.style.color="#000000";
+                button.classList.remove("activekey")
             }
         }
     }
 }
-function captureTouch(){
+function addListeners(){
     var keyboard = document.getElementById("keyboard");
     var buttons=keyboard.getElementsByTagName("button");
     for(i in buttons){
         btn=buttons[i];
-        btn.addEventListener("touchstart",onTouch);
-        btn.addEventListener("touchend",onTouch);
-        btn.addEventListener("touchcancel",onTouch);
+        if(btn.addEventListener){
+            btn.onclick=null
+            btn.addEventListener("touchstart",onPressKey);
+            btn.addEventListener("touchend",onPressKey);
+            btn.addEventListener("touchcancel",onPressKey);
+            btn.addEventListener("mousedown",onPressKey);
+            btn.addEventListener("mouseup",onPressKey);
+            btn.addEventListener("click",function(event){event.preventDefault()});
+        }
     }
+    var stream = document.getElementById("stream")
+    stream.addEventListener("mousedown",onMouseDrag);
+    stream.addEventListener("mouseup",onMouseDrag);
+    stream.addEventListener("mousemove",onMouseDrag);
+    stream.addEventListener("click",function(event){event.preventDefault()});
+    stream.addEventListener("touchstart",onTouchDrag);
+    stream.addEventListener("touchmove",onTouchDrag);
+    stream.addEventListener("touchend",onTouchDrag);
+    stream.addEventListener("touchcancel",onTouchDrag);
 }
-function onTouch(event=new TouchEvent()){
-    event.preventDefault()
+function onPressKey(event=new TouchEvent()){
+    if(event.type.startsWith("touch")) event.preventDefault()
     if(event.target.id.startsWith("keyboard_")){
         var key=event.target.id.replace("keyboard_","")
         console.log(key)
-        if(event.type=="touchstart") pressKey(key,1)
-        else if(event.type=="touchend" || event.type=="touchcancel") pressKey(key,0)
+        if(event.type=="touchstart" || event.type=="mousedown") {
+            pressKey(key,1)
+        }
+        else if(event.type=="touchend" || event.type=="touchcancel" || event.type=="mouseup") {
+            pressKey(key,0)
+        }
     }
+}
+function onMouseDrag(event=new MouseEvent()){
+    event.preventDefault()
+    var stream = document.getElementById("stream")
+    var mouseX=event.offsetX/stream.width
+    var mouseY=event.offsetY/stream.height
+    var button=0
+    if(event.button==1) button=2
+    else if(event.button==2) button=1
+    else button=event.button
+    if(event.type=="mousedown") pressMouse(button,1)
+    if(event.type=="mouseup") pressMouse(button,0)
+    mouseAbs(mouseX,mouseY,event.button)
+}
+function onTouchDrag(event=new TouchEvent()){
+    event.preventDefault()
+    if(event.targetTouches.length>=1){
+        var touch = event.targetTouches[0]
+        var stream = document.getElementById("stream")
+        var mouseX=touch.pageX/stream.width
+        var mouseY=touch.pageY/stream.height
+        var button
+        if(event.targetTouches==2) button=2
+        if(event.targetTouches==3) button=1
+        if(event.type=="touchstart") pressMouse(button,1)
+        else if(event.type=="touchend" || event.type=="touchcancel") pressMouse(button,0)
+        mouseAbs(mouseX,mouseY,event.targetTouches.length)
+    }
+}
+function mouseAbs(x,y,args){
+    var x=Math.max(0,Math.min(1,x))
+    var y=Math.max(0,Math.min(1,y))
+    mouseAbsolute(Math.floor(x*4095),Math.floor(y*4095),0);
+    var debugstr=args+","+" "+x+","+y+" "+x*4095+","+y*4095
+    document.getElementById("debugoutput").innerHTML=debugstr;
 }
 function onResize(){
-var w = document.documentElement.clientWidth;
-var h = document.documentElement.clientHeight;
-if(w<=560){
-    document.getElementById("keyboard1").style.setProperty("width","100%")
-}else{
-    document.getElementById("keyboard1").style.setProperty("width","560px")
-}
-
-}
-
-function timedUpdate()
-{
-    if(wslinked){
-        getPressed();
+    var w = document.documentElement.clientWidth;
+    var h = document.documentElement.clientHeight;
+    if(w<=560){
+        document.getElementById("keyboard1").style.setProperty("width","100%")
     }else{
-        reconnect();
+        document.getElementById("keyboard1").style.setProperty("width","560px")
     }
-    setTimeout("timedUpdate()",2000);
 }
-
 function onLoadComplete(){
     onResize();
-    captureTouch();
+    addListeners();
     window.addEventListener("resize", onResize);
-    // timedUpdate();
 }

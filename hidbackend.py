@@ -5,26 +5,29 @@ __ch9329=None
 
 def handle(message=""):
     global __ch9329
-    execute=message.split(" ")
-    if execute[0].__len__ and not (__ch9329 and __ch9329.getInfo()):
-        init()
-    if execute[0]=="pressKey":
-        return pressKey(execute[1],int(execute[2]))
-    elif execute[0]=="pressMouse":
-        return pressMouse(execute[1],int(execute[2]))
-    elif execute[0]=="mouseRelative":
-        return mouseRelative(int(execute[1]),int(execute[2]),int(execute[3]))
-    elif execute[0]=="mouseAbsolute":
-        return mouseAbsolute(int(execute[1]),int(execute[2]),int(execute[3]))
-    elif execute[0]=="getInfo":
-        pass
-    if execute[0]=="getPressed":
-        return getPressed()
-    elif execute[0]=="releaseAll":
-        return releaseAll()
-    elif execute[0]=="disconnect":
-        closeSerial()
-    else:
+    try:
+        execute=message.split(" ")
+        if execute[0].__len__ and not (__ch9329 and __ch9329.getInfo()):
+            init()
+        if execute[0]=="pressKey":
+            return pressKey(execute[1],int(execute[2]))
+        elif execute[0]=="pressMouse":
+            return pressMouse(execute[1],int(execute[2]))
+        elif execute[0]=="mouseRelative":
+            return mouseRelative(int(execute[1]),int(execute[2]),int(execute[3]))
+        elif execute[0]=="mouseAbsolute":
+            return mouseAbsolute(int(execute[1]),int(execute[2]),int(execute[3]))
+        elif execute[0]=="getInfo":
+            return getInfo()
+        if execute[0]=="getPressed":
+            return getPressed()
+        elif execute[0]=="releaseAll":
+            return releaseAll()
+        elif execute[0]=="disconnect":
+            closeSerial()
+        else:
+            return "Error Can't handle this"
+    except:
         return "Error Can't handle this"
 def init():
     global __ch9329
@@ -46,7 +49,7 @@ def pressKey(keyName,press=2):
         __ch9329.pressByName(keyName,1)
         __ch9329.pressByName(keyName,0)
     else:
-        __ch9329.pressByName(keyName,press)
+        __ch9329.pressByName(keyName,int(press))
     return getPressed()
 def pressMouse(key,press=2):
     global __ch9329
@@ -54,14 +57,14 @@ def pressMouse(key,press=2):
         __ch9329.mousePressClick(key,1)
         __ch9329.mousePressClick(key,0)
     else:
-        __ch9329.mousePressClick(key,press)
+        __ch9329.mousePressClick(int(key),int(press))
     return "mousePressed "+str(__ch9329.getPressedMouse())
 def mouseRelative(x,y,wheel=0):
     global __ch9329
-    return "mouseMove "+str(__ch9329.mouseRel(x,y,wheel))
+    return "mouseMove "+str(__ch9329.mouseRel(int(x),int(y),int(wheel)))
 def mouseAbsolute(x,y,wheel=0):
     global __ch9329
-    return "mouseMove "+str(__ch9329.mouseAbs(x,y,wheel))
+    return "mouseMove "+str(__ch9329.mouseAbs(int(x),int(y),int(wheel)))
 def getInfo():
     global __ch9329
     return "info "+str(__ch9329.getInfo())

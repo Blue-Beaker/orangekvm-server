@@ -1,5 +1,6 @@
 import asyncio
 import websockets
+from websockets.server import WebSocketServerProtocol
 import configHandler
 import hidbackend
 import atexit 
@@ -8,19 +9,20 @@ def clean():
     hidbackend.releaseAll()
     hidbackend.closeSerial()
 
-async def handle(websocket, path):
-    #fetch msg
-    printMsg=0
-    async for message in websocket:
-        if printMsg:
-            print("<- '{}'".format(message))
-        message2=hidbackend.handle(message)
-        if printMsg:
-            print("-> '{}'".format(message2))
-        message3=hidbackend.getInfo()
-        for socket in websocket.ws_server.websockets:
-            await socket.send(message2)
-            await socket.send(message3)
+async def handle(websocket: WebSocketServerProtocol, path):
+    try:
+        printMsg=0
+        async for message in websocket:
+            if printMsg:
+                print("<- '{}'".format(message))
+            message2=hidbackend.handle(message)
+            if printMsg:
+                print("-> '{}'".format(message2))
+            for socket in websocket.ws_server.websockets:
+                await socket.send(message2)
+    except websockets.exceptions.ConnectionClosed:
+        if websocket.ws_server.websockets.__len__()==0:
+            hidbackend.closeSerial()
 
 
 async def main():

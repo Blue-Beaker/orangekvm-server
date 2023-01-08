@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="">
     <head>
         <meta charset="utf-8"> 
         <meta name="viewport" content="width=device-width"/>
@@ -15,29 +15,30 @@
     </script>
     <noscript>Your browser doesn't allow javascript. Please use a browser with javascript and websocket enabled.</noscript>
     <body style="background-color:#FFFFFF;width:100%;height:70%;float:top;">
-        <img src="{streamurl}" alt="{streamurl}" class="shrinkToFit" width=95%>
+        <img id="stream" draggable="false" src="{streamurl}" alt="{streamurl}" class="shrinkToFit" width=95%>
+        <div id="infoAndConfig" style="background-color:#ffffff;width:95%;float:left">
+            <output id="wsstatus" style="color:red">⬤</output>
+            <button id="releaseAll" onclick="releaseAll()">Release All</button>
+            <output id="debugoutput" >debug</output>
+        </div>
+        <div id="keyboard" style="width:95%;float:left;position: relative;">
+            <div class="kbarea" id="keyboard1" style="background-color:#FF8F00;width:100%;height:240px;float:left;position: relative;">
+                <div style="position: relative">
+                {keyboard1}
+                </div>
+            </div>
+            <div class="kbarea" id="keyboard2" style="background-color:#FF8F00;width:120px;height:240px;float:left;position: relative;">
+                <div style="position: relative">
+                {keyboard2}
+                </div>
+            </div>
+            <div class="kbarea" id="keyboard3" style="background-color:#FF8F00;width:160px;height:240px;float:left;position: relative;">
+                <div style="position: relative">
+                {keyboard3}
+                </div>
+            </div>
+        </div>
     </body>
-    <div id="infoAndConfig" style="background-color:#ffffff;width:95%;float:left">
-        <body id="wsstatus" style="color:red">⬤</body>
-        <button id="releaseAll" onclick="releaseAll()">Release All</button>
-    </div>
-    <div id="keyboard" style="width:95%;float:left;position: relative;">
-        <div class="kbarea" id="keyboard1" style="background-color:#FF8F00;width:100%;height:240px;float:left;position: relative;">
-            <div style="position: relative">
-            {keyboard1}
-            </div>
-        </div>
-        <div class="kbarea" id="keyboard2" style="background-color:#FF8F00;width:120px;height:240px;float:left;position: relative;">
-            <div style="position: relative">
-            {keyboard2}
-            </div>
-        </div>
-        <div class="kbarea" id="keyboard3" style="background-color:#FF8F00;width:160px;height:240px;float:left;position: relative;">
-            <div style="position: relative">
-            {keyboard3}
-            </div>
-        </div>
-    </div>
     <script>
         onLoadComplete()
     </script>
