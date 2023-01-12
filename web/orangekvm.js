@@ -139,21 +139,23 @@ function onMouseDrag(event=new MouseEvent()){
 }
 function onTouchDrag(event=new TouchEvent()){
     event.preventDefault()
-    if(event.type=="touchmove"){
-        if(!mouseMoveReady) return;
-        mouseMoveReady=false;
-        setTimeout(function(){mouseMoveReady=true},100)
+    var button=0
+    if(event.type=="touchend" || event.type=="touchcancel"){
+        pressMouse(button,0)
     }
     if(event.targetTouches.length>=1){
         var touch = event.targetTouches[0]
         var stream = document.getElementById("stream")
         var mouseX=touch.pageX/stream.width
         var mouseY=touch.pageY/stream.height
-        var button=0
         if(event.type=="touchstart") pressMouse(button,1)
         mouseAbs(mouseX,mouseY,event.targetTouches.length)
     }
-    if(event.type=="touchend" || event.type=="touchcancel") pressMouse(button,0)
+    if(event.type=="touchmove"){
+        if(!mouseMoveReady) return;
+        mouseMoveReady=false;
+        setTimeout(function(){mouseMoveReady=true},100)
+    }
 }
 function mouseAbs(x,y,args){
     var x=Math.max(0,Math.min(1,x))
