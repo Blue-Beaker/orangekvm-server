@@ -1,0 +1,3 @@
+[submodule "ch9329lib-python3"]
+	path = ch9329lib-python3
+	url = http://192.168.31.7:3000/Blue_Beaker/ch9329lib-python3
