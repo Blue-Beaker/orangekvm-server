@@ -6,6 +6,7 @@ var wslinked = false
 var worker
 var mouseMoveReady=true
 var mouseMode=0
+var debug=0
 function linkws(addr) {
     if(!"Websocket" in window){
         alert("Your browser doesn't support websocket. Please use a browser with websocket support.")
@@ -14,7 +15,7 @@ function linkws(addr) {
     ws = new WebSocket(addr);
     ws.onmessage = function (messageEvent) {
         var message=messageEvent.data;
-        console.log("<- "+message);
+        if (debug) console.log("<- "+message);
         if(message.startsWith("keyPressed ")){
             onKeyPressed(message.slice(start=10));
         }
@@ -32,7 +33,7 @@ function linkws(addr) {
 function wssend(message){
     if(wslinked){
     ws.send(message);
-    console.log("-> "+message);}
+    if(debug) console.log("-> "+message);}
     else
     reconnect();
 }

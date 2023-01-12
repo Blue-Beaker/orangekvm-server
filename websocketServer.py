@@ -4,6 +4,7 @@ from websockets.server import WebSocketServerProtocol
 import configHandler
 import hidbackend
 import atexit 
+printMsg=0
 @atexit.register 
 def clean(): 
     hidbackend.releaseAll()
@@ -11,7 +12,6 @@ def clean():
 
 async def handle(websocket: WebSocketServerProtocol, path):
     try:
-        printMsg=1
         async for message in websocket:
             if printMsg:
                 print("<- '{}'".format(message))
@@ -30,4 +30,6 @@ async def main():
     async with websockets.serve(handle, configHandler.config["server"]["address"], int(configHandler.config["server"]["wsport"])):
         await asyncio.Future()  # run forever
 def run():
+    global printMsg
+    printMsg=int(configHandler.config["server"]["wsprintmessage"])
     asyncio.run(main())

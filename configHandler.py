@@ -19,6 +19,8 @@ def initConfig():
         config["server"]["port"]='8000'
     if("wsport" not in config["server"]):
         config["server"]["wsport"]='8001'
+    if("wsprintmessage" not in config["server"]):
+        config["server"]["wsprintmessage"]='0'
     if("stream" not in config):
         config["stream"]={}
     if("stream_url" not in config["stream"]):
