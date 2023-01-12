@@ -149,9 +149,6 @@ function onTouchDrag(event=new TouchEvent()){
         var mouseX=touch.pageX/stream.width
         var mouseY=touch.pageY/stream.height
         var button=0
-        if(event.targetTouches.length==2) button=2
-        else if(event.targetTouches.length==3) button=1
-        else button=event.targetTouches.length-1
         if(event.type=="touchstart") pressMouse(button,1)
         mouseAbs(mouseX,mouseY,event.targetTouches.length)
     }
