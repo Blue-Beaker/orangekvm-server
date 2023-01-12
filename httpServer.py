@@ -32,6 +32,7 @@ class ServerCore2(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, directory=None, **kwargs):
         super().__init__(*args, **kwargs, directory = 'web')
     def do_GET(self):
+        print(self.path)
         """Serve a GET request."""
         try:
             f,ctype = self.send_head()
