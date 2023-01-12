@@ -32,11 +32,11 @@ class ServerCore2(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, directory=None, **kwargs):
         super().__init__(*args, **kwargs, directory = 'web')
     def do_GET(self):
-        print(self.path)
         """Serve a GET request."""
         try:
-            f,ctype = self.send_head()
-            if f:
+            req = self.send_head()
+            if req:
+                f,ctype=req
                 try:
                     if ctype=="text/html":
                         __DICT={
@@ -75,7 +75,8 @@ class ServerCore2(http.server.SimpleHTTPRequestHandler):
                     path = index
                     break
             else:
-                return self.list_directory(path)
+                self.send_response(HTTPStatus.NOT_FOUND)
+                return None
         ctype = self.guess_type(path)
         # check for trailing "/" which should return 404. See Issue17324
         # The test for this was added in test_httpserver.py
