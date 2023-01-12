@@ -13,7 +13,7 @@ def getjs(file):
     os.chdir(path)
     with open(file, 'r') as jsfile:
         return jsfile.read()
-def virtKeyboard(keymap: list[dict[str,list[str,float,float]]],columns):
+def virtKeyboard(keymap: list[dict[str,list]],columns):
     keystr = ""
     for y in range(keymap.__len__()):
         x=0
