@@ -5,6 +5,7 @@ import configHandler
 import httpServer
 import websocketServer
 import threading
+import hidbackend
 
 if __name__ == '__main__':
     path = sys.path[0]
@@ -22,5 +23,5 @@ if __name__ == '__main__':
     print("Starting HTTP server")
     httpthread.start()
     print("Started HTTP server")
-    
+    hidbackend.init()
     

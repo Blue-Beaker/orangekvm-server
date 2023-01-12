@@ -104,7 +104,7 @@ class ServerCore2(http.server.SimpleHTTPRequestHandler):
 
 
 class Server:
-    def __init__(self,config:configHandler.configparser.ConfigParser):
+    def __init__(self,config:configHandler.configparser.SectionProxy):
         self.server = http.server.HTTPServer((config['address'],int(config["port"])),ServerCore2)
     def serve_forever(self):
         self.server.serve_forever()
