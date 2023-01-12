@@ -4,6 +4,20 @@ div.kbarea
     border-radius:5px;
     padding: 2px;
 }
+button
+{
+    border:1px solid;
+    border-radius:1px;
+    padding: 2px;
+    text-align: center;
+    background-color: "#F0F0F0";
+    color: "#000000";
+}
+button:active
+{
+    background-color: "#8F8F8F";
+    color: "#000000";
+}
 button.key
 {
     border:1px solid;

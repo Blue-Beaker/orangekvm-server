@@ -4,6 +4,8 @@ var hostip = host.replace("http://","").replace("https://","")
 var ws
 var wslinked = false
 var worker
+var mouseMoveReady=true
+var mouseMode=0
 function linkws(addr) {
     if(!"Websocket" in window){
         alert("Your browser doesn't support websocket. Please use a browser with websocket support.")
@@ -118,6 +120,11 @@ function onPressKey(event=new TouchEvent()){
 }
 function onMouseDrag(event=new MouseEvent()){
     event.preventDefault()
+    if(event.type=="mousemove"){
+        if(!mouseMoveReady) return;
+        mouseMoveReady=false;
+        setTimeout(function(){mouseMoveReady=true},100)
+    }
     var stream = document.getElementById("stream")
     var mouseX=event.offsetX/stream.width
     var mouseY=event.offsetY/stream.height
@@ -131,18 +138,24 @@ function onMouseDrag(event=new MouseEvent()){
 }
 function onTouchDrag(event=new TouchEvent()){
     event.preventDefault()
+    if(event.type=="touchmove"){
+        if(!mouseMoveReady) return;
+        mouseMoveReady=false;
+        setTimeout(function(){mouseMoveReady=true},100)
+    }
     if(event.targetTouches.length>=1){
         var touch = event.targetTouches[0]
         var stream = document.getElementById("stream")
         var mouseX=touch.pageX/stream.width
         var mouseY=touch.pageY/stream.height
-        var button
-        if(event.targetTouches==2) button=2
-        if(event.targetTouches==3) button=1
+        var button=0
+        if(event.targetTouches.length==2) button=2
+        else if(event.targetTouches.length==3) button=1
+        else button=event.targetTouches.length-1
         if(event.type=="touchstart") pressMouse(button,1)
-        else if(event.type=="touchend" || event.type=="touchcancel") pressMouse(button,0)
         mouseAbs(mouseX,mouseY,event.targetTouches.length)
     }
+    if(event.type=="touchend" || event.type=="touchcancel") pressMouse(button,0)
 }
 function mouseAbs(x,y,args){
     var x=Math.max(0,Math.min(1,x))
@@ -150,6 +163,18 @@ function mouseAbs(x,y,args){
     mouseAbsolute(Math.floor(x*4095),Math.floor(y*4095),0);
     var debugstr=args+","+" "+x+","+y+" "+x*4095+","+y*4095
     document.getElementById("debugoutput").innerHTML=debugstr;
+}
+function mouseRel(x,y,args){
+
+}
+function cycleMouseMode(){
+    if(mouseMode==1){
+        mouseMode=0
+        document.getElementById("mouseModeButton").innerHTML="Mouse Mode: Relative"
+    }else if(mouseMode==0){
+        mouseMode=1
+        document.getElementById("mouseModeButton").innerHTML="Mouse Mode: Absolute"
+    }
 }
 function onResize(){
     var w = document.documentElement.clientWidth;

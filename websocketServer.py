@@ -11,11 +11,11 @@ def clean():
 
 async def handle(websocket: WebSocketServerProtocol, path):
     try:
-        printMsg=0
+        printMsg=1
         async for message in websocket:
             if printMsg:
                 print("<- '{}'".format(message))
-            message2=hidbackend.handle(message)
+            message2=hidbackend.handle(str(message))
             if printMsg:
                 print("-> '{}'".format(message2))
             for socket in websocket.ws_server.websockets:
@@ -27,7 +27,7 @@ async def handle(websocket: WebSocketServerProtocol, path):
 
 async def main():
     # start a websocket server
-    async with websockets.serve(handle, configHandler.config["server"]["address"], configHandler.config["server"]["wsport"]):
+    async with websockets.serve(handle, configHandler.config["server"]["address"], int(configHandler.config["server"]["wsport"])):
         await asyncio.Future()  # run forever
 def run():
     asyncio.run(main())

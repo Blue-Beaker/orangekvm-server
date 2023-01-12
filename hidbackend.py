@@ -1,7 +1,6 @@
 from ch9329lib import ch9329lib
 import configHandler
 __ch9329: ch9329lib.CH9329HID
-__ch9329=None
 
 def handle(message=""):
     global __ch9329
@@ -25,6 +24,7 @@ def handle(message=""):
             return releaseAll()
         elif execute[0]=="disconnect":
             closeSerial()
+            return "Closed Port"
         else:
             return "Error Can't handle this"
     except:
@@ -33,11 +33,11 @@ def init():
     global __ch9329
     config=configHandler.config
     if config["hid"]["hid_type"].startswith("ch9329_"):
-        __ch9329=ch9329lib.CH9329HID(config["hid"]["hid_type"].startswith("ch9329_tcp"),config["hid"]["hid_path"],int(config["hid"]["ch9329_address"]),config["hid"]["baudrate"],False)
+        __ch9329=ch9329lib.CH9329HID(config["hid"]["hid_type"].startswith("ch9329_tcp"),config["hid"]["hid_path"],int(config["hid"]["ch9329_address"]),int(config["hid"]["baudrate"]),False)
     else:
         raise UnknownHIDTypeException
 def getPressed():
-    pressedString=""
+    pressedString=str()
     pressedTuple=__ch9329.getPressedKeyAll()
     for list in pressedTuple:
         for key in list:
@@ -70,13 +70,11 @@ def getInfo():
     return "info "+str(__ch9329.getInfo())
 def releaseAll():
     global __ch9329
-    if __ch9329:
-        __ch9329.releaseAll()
-        return getPressed()
+    __ch9329.releaseAll()
+    __ch9329.mouseReleaseAll()
+    return getPressed()
 def closeSerial():
-    global __ch9329
-    if __ch9329:
-        __ch9329.closeSerial()
-        return "Info Disconnected"
+    __ch9329.closeSerial()
+    return "Info Disconnected"
 class UnknownHIDTypeException(Exception):
     pass
