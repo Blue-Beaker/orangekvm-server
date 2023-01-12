@@ -19,9 +19,15 @@
         <div id="infoAndConfig" style="background-color:#ffffff;width:95%;float:left">
             <output id="wsstatus" style="color:red">⬤</output>
             <button id="releaseAll" onclick="releaseAll()">Release All</button>
-            <button id="mouseModeButton" onclick="cycleMouseMode()">Mouse Mode: Relative</button>
-            <button id="mouseLeft">Left</button>
             <output id="debugoutput" >debug</output>
+            <div id="mouse">
+                <button id="mouseModeButton" onclick="cycleMouseMode()">Mouse Mode: Relative</button>
+                <button id="mouseLeft">Left</button>
+                <button id="mouseMiddle">Middle</button>
+                <button id="mouseRight">Right</button>
+                <button id="mouseBack">Back</button>
+                <button id="mouseForward">Forward</button>
+            </div>
         </div>
         <div id="keyboard" style="width:95%;float:left;position: relative;">
             <div class="kbarea" id="keyboard1" style="background-color:#FF8F00;width:100%;height:240px;float:left;position: relative;">
