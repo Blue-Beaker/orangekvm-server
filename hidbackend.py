@@ -16,6 +16,8 @@ def handle(message=""):
             return mouseRelative(int(execute[1]),int(execute[2]),int(execute[3]))
         elif execute[0]=="mouseAbsolute":
             return mouseAbsolute(int(execute[1]),int(execute[2]),int(execute[3]))
+        elif execute[0]=="mousePressButtons":
+            return mousePressButtons(int(execute[1],base=2))
         elif execute[0]=="getInfo":
             return getInfo()
         if execute[0]=="getPressed":
@@ -58,6 +60,9 @@ def pressMouse(key,press=2):
         __ch9329.mousePressClick(key,0)
     else:
         __ch9329.mousePressClick(int(key),int(press))
+    return "mousePressed "+str(__ch9329.getPressedMouse())
+def mousePressButtons(buttons:int):
+    __ch9329.setMouseButtons(buttons)
     return "mousePressed "+str(__ch9329.getPressedMouse())
 def mouseRelative(x,y,wheel=0):
     global __ch9329
