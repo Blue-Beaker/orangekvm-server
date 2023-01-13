@@ -117,9 +117,9 @@ function onMouseDrag(event=new MouseEvent()){
 }
 function onTouchDrag(event=new TouchEvent()){
     event.preventDefault()
-    var button=event.targetTouches.length
-    if(event.targetTouches.length==1) button=2
-    else if(event.targetTouches.length==2) button=1
+    var button=event.targetTouches.length-1
+    if(button==1) button=2
+    else if(button==2) button=1
     mousePressButtons(1<<button)
     // if(event.type=="touchend" || event.type=="touchcancel"){
     // }
