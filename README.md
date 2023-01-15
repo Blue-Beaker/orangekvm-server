@@ -17,17 +17,16 @@ Configuration:
 
 `[hid]`:  
 `hid_type`:   
-- `ch9329_tty`: ch9329 over serial  
-- `ch9329_tcp`: ch9329 over serial over tcp  
+- `ch9329`: ch9329 protocol
 
-`hid_path`: 
-- When using `ch9329_tty`: serial port path, for example `/dev/ttyUSB0`.
-- When using `ch9329_tcp`: serial over tcp host:port, for example `192.168.1.2:23`
+`serial_path`: 
+- serial port path, for example `/dev/ttyUSB0`.  
+- or serial over tcp: `tcp://host:port`, for example `tcp://192.168.1.2:23`  
 
 
 `ch9329_address`:  
 - ch9329 chip address in decimial format. defaults to 0.  
 
 `baudrate`:  
-- When using `ch9329_tty`: serial port baudrate.  
-- When using `ch9329_tcp`: unused, please set baudrate on your serial-over-tcp host instead.  
+- When using local serial: Serial port baudrate. 
+- When using serial over tcp: Unused , please set baudrate on your serial-over-tcp host instead.  

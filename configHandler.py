@@ -28,9 +28,9 @@ def initConfig():
     if("hid" not in config):
         config["hid"]={}
     if("hid_type" not in config["hid"]):
-        config["hid"]["hid_type"]="ch9329_tty"
-    if("hid_path" not in config["hid"]):
-        config["hid"]["hid_path"]="/dev/ttyUSB0"
+        config["hid"]["hid_type"]="ch9329"
+    if("serial_path" not in config["hid"]):
+        config["hid"]["serial_path"]="/dev/ttyUSB0"
     if("ch9329_address" not in config["hid"]):
         config["hid"]["ch9329_address"]="0"
     if("baudrate" not in config["hid"]):

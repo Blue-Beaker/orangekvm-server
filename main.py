@@ -1,3 +1,4 @@
+#! /bin/python3
 import configparser
 import sys
 import os

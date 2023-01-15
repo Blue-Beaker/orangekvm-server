@@ -1,3 +1,5 @@
+import os
+import sys
 from ch9329lib import ch9329lib
 import configHandler
 __ch9329: ch9329lib.CH9329HID
@@ -34,8 +36,11 @@ def handle(message=""):
 def init():
     global __ch9329
     config=configHandler.config
-    if config["hid"]["hid_type"].startswith("ch9329_"):
-        __ch9329=ch9329lib.CH9329HID(config["hid"]["hid_type"].startswith("ch9329_tcp"),config["hid"]["hid_path"],int(config["hid"]["ch9329_address"]),int(config["hid"]["baudrate"]),False)
+    if config["hid"]["hid_type"].startswith("ch9329"):
+        if config["hid"]["serial_path"].startswith("tcp://"):
+            __ch9329=ch9329lib.CH9329HID(True,config["hid"]["serial_path"].removeprefix("tcp://"),int(config["hid"]["ch9329_address"]),int(config["hid"]["baudrate"]),False)
+        else:
+            __ch9329=ch9329lib.CH9329HID(False,config["hid"]["serial_path"],int(config["hid"]["ch9329_address"]),int(config["hid"]["baudrate"]),False)
     else:
         raise UnknownHIDTypeException
 def getPressed():
@@ -62,7 +67,7 @@ def pressMouse(key,press=2):
         __ch9329.mousePressClick(int(key),int(press))
     return "mousePressed "+str(__ch9329.getPressedMouse())
 def mousePressButtons(buttons:int):
-    __ch9329.setMouseButtons(buttons)
+    __ch9329.mousePressButtons(buttons)
     return "mousePressed "+str(__ch9329.getPressedMouse())
 def mouseRelative(x,y,wheel=0):
     global __ch9329

@@ -4,7 +4,7 @@ from websockets.server import WebSocketServerProtocol
 import configHandler
 import hidbackend
 import atexit 
-printMsg=0
+printMsg:int
 @atexit.register 
 def clean(): 
     hidbackend.releaseAll()

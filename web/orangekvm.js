@@ -117,10 +117,14 @@ function onMouseDrag(event=new MouseEvent()){
 }
 function onTouchDrag(event=new TouchEvent()){
     event.preventDefault()
-    var button=event.targetTouches.length-1
-    if(button==1) button=2
-    else if(button==2) button=1
-    mousePressButtons(1<<button)
+    var button
+    if(event.targetTouches.length==0) button=0
+    else if(event.targetTouches.length==1) button=1
+    else if(event.targetTouches.length==2) button=10
+    else if(event.targetTouches.length==3) button=100
+    else if(event.targetTouches.length==4) button=1000
+    else if(event.targetTouches.length>=5) button=10000
+    mousePressButtons(button)
     // if(event.type=="touchend" || event.type=="touchcancel"){
     // }
     if(event.type=="touchmove"){
