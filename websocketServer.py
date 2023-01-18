@@ -1,4 +1,5 @@
 import asyncio
+import traceback
 import websockets
 from websockets.server import WebSocketServerProtocol
 import configHandler
@@ -7,8 +8,11 @@ import atexit
 printMsg:int
 @atexit.register 
 def clean(): 
-    hidbackend.releaseAll()
-    hidbackend.closeSerial()
+    try:
+        hidbackend.releaseAll()
+        hidbackend.closeSerial()
+    except:
+        pass
 
 async def handle(websocket: WebSocketServerProtocol, path):
     try:
@@ -22,7 +26,10 @@ async def handle(websocket: WebSocketServerProtocol, path):
                 await socket.send(message2)
     except websockets.exceptions.ConnectionClosed:
         if websocket.ws_server.websockets.__len__()==0:
-            hidbackend.closeSerial()
+            try:
+                hidbackend.closeSerial()
+            except:
+                traceback.print_exc()
 
 
 async def main():

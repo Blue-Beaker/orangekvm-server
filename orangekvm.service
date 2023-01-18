@@ -1,0 +1,12 @@
+[Unit]
+Description=OrangeKVM Server
+
+[Service]
+Type=simple
+ExecStart=/home/pi/orangekvm-server/main.py
+Restart=on-failure
+RestartSec=5s
+User=pi
+
+[Install]
+WantedBy=multi-user.target

@@ -11,7 +11,6 @@ import hidbackend
 if __name__ == '__main__':
     path = sys.path[0]
     os.chdir(path)
-    print(path)
     configHandler.__init__()
     wsthread=threading.Thread(target = websocketServer.run)
     wsthread.setDaemon(True)
