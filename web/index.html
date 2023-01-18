@@ -20,13 +20,14 @@
             <output id="wsstatus" style="color:red">⬤</output>
             <button id="releaseAll" onclick="releaseAll()">Release All</button>
             <output id="debugoutput" >debug</output>
-            <div id="mouse">
-                <button id="mouseModeButton" onclick="cycleMouseMode()">Mouse Mode: Relative</button>
-                <button id="mouseLeft">Left</button>
-                <button id="mouseMiddle">Middle</button>
-                <button id="mouseRight">Right</button>
-                <button id="mouseBack">Back</button>
-                <button id="mouseForward">Forward</button>
+            <br>
+            <button id="mouseModeButton" onclick="cycleMouseMode()">Mouse Mode: Relative</button>
+            <div id="mouse" style="float:up;position:sticky">
+                <button class='key' id="mouseButtonLeft" style="width:40px;height: 40px;">Left</button>
+                <button class='key' id="mouseButtonMiddle" style="width:40px;height: 40px;">Middle</button>
+                <button class='key' id="mouseButtonRight" style="width:40px;height: 40px;">Right</button><br>
+                <button class='key' id="mouseButtonBack" style="width:60px;height: 40px;">Back</button>
+                <button class='key' id="mouseButtonForward" style="width:60px;height: 40px;">Forward</button>
             </div>
         </div>
         <div id="keyboard" style="width:95%;float:left;position: relative;">

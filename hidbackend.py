@@ -41,6 +41,10 @@ def init():
             __ch9329=ch9329lib.CH9329HID(True,config["hid"]["serial_path"].removeprefix("tcp://"),int(config["hid"]["ch9329_address"]),int(config["hid"]["baudrate"]),False)
         else:
             __ch9329=ch9329lib.CH9329HID(False,config["hid"]["serial_path"],int(config["hid"]["ch9329_address"]),int(config["hid"]["baudrate"]),False)
+        if __ch9329.getInfo():
+            print("Connected to CH9329 chip")
+        else:
+            print("Can't connect to CH9329 chip, check your configuration")
     else:
         raise UnknownHIDTypeException
 def getPressed():

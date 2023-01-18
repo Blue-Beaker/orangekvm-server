@@ -39,3 +39,6 @@ button.key:active {
     background-color: "#CCCCCC";
     color: "#FFFFFF";
 }
+::-webkit-scrollbar {
+    width: 0;
+}
