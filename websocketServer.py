@@ -3,7 +3,7 @@ import traceback
 import websockets
 from websockets.server import WebSocketServerProtocol
 import configHandler
-import hidbackend
+import hidbackend,usbstorage
 import atexit 
 printMsg:int
 @atexit.register 
@@ -17,9 +17,13 @@ def clean():
 async def handle(websocket: WebSocketServerProtocol, path):
     try:
         async for message in websocket:
+            message=str(message)
             if printMsg:
                 print("<- '{}'".format(message))
-            message2=hidbackend.handle(str(message))
+            if str(message).startswith("image"):
+                message2=usbstorage.handle(message.removeprefix("image"))
+            else:
+                message2=hidbackend.handle(str(message))
             if printMsg:
                 print("-> '{}'".format(message2))
             for socket in websocket.ws_server.websockets:

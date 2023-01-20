@@ -215,6 +215,15 @@ function mouseButtonsListeners(){
         addButtonListeners(document.getElementById(btn),i);
     }
 }
+
+function loadImage(){
+    select=document.getElementById("selectimage")
+    wssend("imageload "+select.options[select.selectedIndex].value)
+}
+function unloadImage(){
+    wssend("imageunload")
+}
+
 function addListeners(){
     var keyboard = document.getElementById("keyboard");
     var buttons=keyboard.getElementsByTagName("button");

@@ -20,6 +20,11 @@
             <output id="wsstatus" style="color:red">⬤</output>
             <button id="releaseAll" onclick="releaseAll()">Release All</button>
             <output id="debugoutput" >debug</output>
+            <select id="selectimage">
+                {images}
+            </select>
+            <button id="loadimage" onclick="loadImage()">Load</button>
+            <button id="unloadimage" onclick="unloadImage()">Unload</button>
             <br>
             <button id="mouseModeButton" onclick="cycleMouseMode()">Mouse Mode: Relative</button>
             <div id="mouse" style="float:up;position:sticky">

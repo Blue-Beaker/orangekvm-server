@@ -6,6 +6,12 @@
 使用 CH9329 芯片控制键盘鼠标。  
 <b>不要在没有额外加密的情况下将此服务端暴露在公网。  </b>
 
+USB存储模拟: 此服务端可利用 [USB Gadget Mass Storage](https://linux-sunxi.org/USB_Gadget/Mass_storage) 来模拟可启动的USB盘.  
+1. 确保运行此服务端的用户可以免密码执行 `sudo modprobe`, 否则无法模拟.  
+2. 将镜像放在 `usbimages` 文件夹内. 镜像格式可以是ISO(只读) 或原始磁盘映像(读写, 可使用 `dd` 命令创建).  
+3. 在网页界面的下拉框中选择需要的镜像文件, 然后点击 "load"  
+注意：其他已加载的USB Gadget模块可能影响此功能的使用
+
 配置:  
 `[server]`:  
 `address`: 服务端监听地址.  

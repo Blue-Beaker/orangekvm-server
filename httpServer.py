@@ -27,6 +27,12 @@ def virtKeyboard(keymap: list[dict[str,list]],columns):
                 position:absolute; left:{x/columns*100}%; top:{y*40}px;"> {line[key][0]} </button>"""
             x=x+line[key][1]
     return keystr
+def getImages():
+    section=""
+    files=os.listdir("usbimages")
+    for file in files:
+        section=section+"<option value=\""+file+"\">"+file+"</option>"
+    return section
 
 class ServerCore2(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, directory=None, **kwargs):
@@ -44,7 +50,8 @@ class ServerCore2(http.server.SimpleHTTPRequestHandler):
                             "streamurl":configHandler.config["stream"]["stream_url"],
                             "keyboard1":virtKeyboard(constants.KEYBOARD.KEYS1,14),
                             "keyboard2":virtKeyboard(constants.KEYBOARD.KEYS2,3),
-                            "keyboard3":virtKeyboard(constants.KEYBOARD.KEYS3,4)
+                            "keyboard3":virtKeyboard(constants.KEYBOARD.KEYS3,4),
+                            "images":getImages()
                         }
                         pagestr=f.read().decode()
                         self.wfile.write(pagestr.format(**__DICT).encode())

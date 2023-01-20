@@ -6,6 +6,12 @@ An simple ipkvm server with web interface. Made for orangepi zero, also usable o
 Uses CH9329 chip to control keyboard and mouse.  
 <b>Don't expose the server to public network without extra encryption.  </b>
 
+USB storage emulation: This server can use [USB Gadget Mass Storage](https://linux-sunxi.org/USB_Gadget/Mass_storage) to emulate a bootable USB drive.  
+1. make sure your user running the server is able to `sudo modprobe g_mass_storage` with no password, or it will fail.  
+2. Put images in `usbimages` folder. Images can be ISO(read-only) and raw image(read-write, can be created with `dd` command).  
+3. Select the image from the dropdown menu in the web interface and click "load"  
+Note: Other loaded USB Gadget modules may interference with this.
+
 Configuration:  
 `[server]`:  
 `address`: Server listen address.  
