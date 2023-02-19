@@ -1,5 +1,6 @@
 import os
 import sys
+import traceback
 from ch9329lib import ch9329lib
 import configHandler
 __ch9329: ch9329lib.CH9329HID
@@ -31,8 +32,8 @@ def handle(message=""):
             return "Closed Port"
         else:
             return "Error Can't handle this"
-    except:
-        return "Error Can't handle this"
+    except Exception as e:
+        return "Exception: "+traceback.format_exc()
 def init():
     global __ch9329
     config=configHandler.config
@@ -81,7 +82,14 @@ def mouseAbsolute(x,y,wheel=0):
     return "mouseMove "+str(__ch9329.mouseAbs(int(x),int(y),int(wheel)))
 def getInfo():
     global __ch9329
-    return "info "+str(__ch9329.getInfo())
+    try:
+        info=__ch9329.getInfo()
+        if info:
+            return "info "+f"locks={format(info[7],'03b')} usb={info[6]==1} ver={format(info[5],'02x')} "
+        else:
+            return "failed getinfo"
+    except:
+        return "failed getinfo"+traceback.format_exc()
 def releaseAll():
     global __ch9329
     __ch9329.releaseAll()
