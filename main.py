@@ -7,10 +7,11 @@ import httpServer
 import websocketServer
 import threading
 import hidbackend
-
+import scripts
 if __name__ == '__main__':
     path = sys.path[0]
     os.chdir(path)
+    scripts.onStart()
     configHandler.__init__()
     wsthread=threading.Thread(target = websocketServer.run)
     wsthread.setDaemon(True)
