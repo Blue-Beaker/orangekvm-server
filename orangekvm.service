@@ -3,10 +3,11 @@ Description=OrangeKVM Server
 
 [Service]
 Type=simple
-ExecStart=/home/pi/orangekvm-server/main.py
+ExecStartPre=/home/pi/orangekvm-server/setgpios.sh
+ExecStart=sudo -u pi /home/pi/orangekvm-server/main.py
 Restart=on-failure
 RestartSec=5s
-User=pi
+User=root
 
 [Install]
 WantedBy=multi-user.target

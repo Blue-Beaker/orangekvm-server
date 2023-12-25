@@ -1,5 +1,5 @@
 
-div.kbarea
+div.rpanel
 {
     border-radius:5px;
     padding: 2px;
@@ -10,13 +10,13 @@ button
     border-radius:1px;
     padding: 2px;
     text-align: center;
-    background-color: "#F0F0F0";
-    color: "#000000";
+    background-color: #F0F0F0;
+    color: #000000;
 }
 button:active
 {
-    background-color: "#8F8F8F";
-    color: "#000000";
+    background-color: #8F8F8F;
+    color: #000000;
 }
 button.key
 {
@@ -26,19 +26,38 @@ button.key
     text-align: center;
     box-shadow: 0 2px #999;
     transform: translateY(-2px);
-    background-color: "#F0F0F0";
-    color: "#000000";
+    background-color: #F0F0F0;
+    color: #000000;
 }
 button.activekey {
     box-shadow: 0 0px #666;
     transform: translateY(0px);
-    background-color: "#5599FF";
-    color: "#FFFFFF";
+    background-color: #5599FF;
+    color: #FFFFFF;
 }
 button.key:active {
-    background-color: "#CCCCCC";
-    color: "#FFFFFF";
+    background-color: #CCCCCC;
+}
+button.activekey:active {
+    background-color: #5599FF;
+    color: #FFFFFF;
 }
 ::-webkit-scrollbar {
     width: 0;
+}
+
+button.light
+{
+    border:0px;
+    border-radius:20px;
+    height: 20px;
+    width: 20px;
+    padding: 0px;
+    text-align: center;
+    background-color: #FF0000;
+    color: #ffffff;
+}
+button.lightlit
+{
+    background-color: #00FF00;
 }
