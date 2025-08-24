@@ -1,7 +1,7 @@
 import asyncio
 import traceback
 import websockets
-from websockets.server import WebSocketServerProtocol
+from websockets.asyncio.server import ServerConnection
 import configHandler
 import hidbackend,usbstorage
 import atexit 
@@ -14,7 +14,7 @@ def clean():
     except:
         pass
 
-async def handle(websocket: WebSocketServerProtocol, path):
+async def handle(websocket: ServerConnection, path:str=""):
     try:
         async for message in websocket:
             message=str(message)
@@ -26,10 +26,10 @@ async def handle(websocket: WebSocketServerProtocol, path):
                 message2=hidbackend.handle(str(message))
             if printMsg:
                 print("-> '{}'".format(message2))
-            for socket in websocket.ws_server.websockets:
+            for socket in websocket.server.connections:
                 await socket.send(message2)
     except websockets.exceptions.ConnectionClosed:
-        if websocket.ws_server.websockets.__len__()==0:
+        if websocket.server.connections.__len__()==0:
             try:
                 hidbackend.closeSerial()
             except:

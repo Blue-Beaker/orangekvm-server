@@ -14,7 +14,7 @@ if __name__ == '__main__':
     scripts.onStart()
     configHandler.__init__()
     wsthread=threading.Thread(target = websocketServer.run)
-    wsthread.setDaemon(True)
+    wsthread.daemon=True
     print("Starting Websocket server")
     wsthread.start()
     print("Started Websocket server")

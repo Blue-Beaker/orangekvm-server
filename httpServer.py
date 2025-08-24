@@ -3,6 +3,7 @@ import http.server
 from http import HTTPStatus
 import os
 import sys
+import traceback
 import urllib
 import configHandler
 import http.client
@@ -29,6 +30,8 @@ def virtKeyboard(keymap: list[dict[str,list]],columns):
     return keystr
 def getImages():
     section=""
+    if not os.path.exists("usbimages"):
+        os.makedirs("usbimages",exist_ok=True)
     files=os.listdir("usbimages")
     for file in files:
         section=section+"<option value=\""+file+"\">"+file+"</option>"
@@ -57,6 +60,8 @@ class ServerCore2(http.server.SimpleHTTPRequestHandler):
                         self.wfile.write(pagestr.format(**__DICT).encode())
                     else:
                         self.copyfile(f, self.wfile)
+                except:
+                    traceback.print_exc()
                 finally:
                     f.close()
         except:
