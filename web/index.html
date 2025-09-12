@@ -13,10 +13,18 @@
     }}
     reconnect()
     </script>
+    <style>
+        .unselectable {{
+        user-select: none; /* 标准属性 */
+        -webkit-user-select: none; /* Chrome, Safari */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE 和 Edge */
+        }}
+    </style>
     <noscript>Your browser doesn't allow javascript. Please use a browser with javascript and websocket enabled.</noscript>
     <body oncontextmenu=self.event.returnValue=false style="width:100%;height:70%;float:top;">
         <div class="rpanel" id="streamcontainer" style="background-color:#b3b3b3;padding: 5px;width: fit-content;height: fit-content;">
-            <img id="stream" draggable="false" src="{streamurl}?extra_headers=1,advance_headers=1,dual_final_frames=1" alt="{streamurl}" style="width: min( 95vw , calc( 90vh * 16 / 9 ) );">
+            <img id="stream" draggable="false" class="unselectable" src="{streamurl}?extra_headers=1,advance_headers=1,dual_final_frames=1" alt="{streamurl}" style="width: min( 95vw , calc( 90vh * 16 / 9 ) );">
         </div>
         <div id="panel" style="position: relative;bottom: -15px;width: 100%;height: 260px;">
             <div id="keyboard" style="width:fit-content;float:left;">
