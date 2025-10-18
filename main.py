@@ -2,6 +2,7 @@
 import configparser
 import sys
 import os
+import time
 import configHandler
 import httpServer
 import websocketServer
@@ -24,5 +25,8 @@ if __name__ == '__main__':
     print("Starting HTTP server")
     httpthread.start()
     print("Started HTTP server")
-    hidbackend.init()
+    ch9329_connected=False
+    while ch9329_connected==False:
+        ch9329_connected=hidbackend.init()
+        time.sleep(5)
     
